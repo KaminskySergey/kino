@@ -17,8 +17,8 @@ console.log(list);
 const listGallery = document.querySelector('.list-film')
 const form = document.querySelector('form')
 const input = document.querySelector('.input')
-const contGallery = document.querySelector('.gallery')
-console.log(contGallery);
+const gallery = document.querySelector('.container__gallery')
+console.log(gallery);
 let inputValue
 input.addEventListener('input', onInput)
 
@@ -58,7 +58,7 @@ async function fetchFilmsTop(){
 
 async function fetchFilms(){
     
-    const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${inputValue}&page=1`, {
+    const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${inputValue}&page=1&pageCounter=10`, {
        method: 'GET',
        headers: {
            'X-API-KEY': '984ce7e4-6635-4617-b147-99beac578db1',
@@ -68,7 +68,7 @@ async function fetchFilms(){
    const responseSearch = await res.json()
    console.log(responseSearch.films.length);
    if(responseSearch.films.length > 0){
-    contGallery.classList.remove('hidden')
+    gallery.classList.remove('before-height')
 
    }
    moviesGallegy(responseSearch)
@@ -114,13 +114,14 @@ function markupFilm({posterUrlPreview, nameEn, rating, year}){
 
 function markupFilmSearch({posterUrlPreview, nameEn, rating, year}){
     return `
-    <li class="item-list__film">
+    <li class="list-item__film">
+          <a href="#" class="list-item__link">
           <img src="${posterUrlPreview}" width="200" alt="${nameEn}">
-          <div>
-            <h2>${nameEn}</h2>
-            <p class="rating">${rating}</p>
-            <p class="years">${year}</p>
-          </div>
+          <div class="photo-card">
+            <h2 class="photo-card__name">${nameEn}</h2>
+            <p class="photo-card__rating">${rating}</p>
+            <p class="photo-card__years">${year}</p>
+          </div></a>
         </li>`
 }
 
